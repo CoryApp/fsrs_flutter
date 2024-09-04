@@ -6,6 +6,12 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async => await RustLib.init());
   test('Can call rust function', () async {
-    expect(greet(name: "Tom"), "Hello, Tom!");
+    expect(
+        nextCard(
+                currentMemoryState: null,
+                daysElapsed: 0,
+                status: CardStatus.hard)
+            .interval,
+        1);
   });
 }

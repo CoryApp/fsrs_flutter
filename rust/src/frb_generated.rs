@@ -37,7 +37,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.3.0";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -1918914929;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 154551594;
 
 // Section: executor
 
@@ -45,37 +45,7 @@ flutter_rust_bridge::frb_generated_default_handler!();
 
 // Section: wire_funcs
 
-fn wire__crate__api__simple__greet_impl(
-    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
-    rust_vec_len_: i32,
-    data_len_: i32,
-) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "greet",
-            port: None,
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
-        },
-        move || {
-            let message = unsafe {
-                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
-                    ptr_,
-                    rust_vec_len_,
-                    data_len_,
-                )
-            };
-            let mut deserializer =
-                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_name = <String>::sse_decode(&mut deserializer);
-            deserializer.end();
-            transform_result_sse::<_, ()>((move || {
-                let output_ok = Result::<_, ()>::Ok(crate::api::simple::greet(api_name))?;
-                Ok(output_ok)
-            })())
-        },
-    )
-}
-fn wire__crate__api__simple__init_app_impl(
+fn wire__crate__api__fsrs__init_app_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
     rust_vec_len_: i32,
@@ -101,7 +71,7 @@ fn wire__crate__api__simple__init_app_impl(
             move |context| {
                 transform_result_sse::<_, ()>((move || {
                     let output_ok = Result::<_, ()>::Ok({
-                        crate::api::simple::init_app();
+                        crate::api::fsrs::init_app();
                     })?;
                     Ok(output_ok)
                 })())
@@ -109,39 +79,81 @@ fn wire__crate__api__simple__init_app_impl(
         },
     )
 }
+fn wire__crate__api__fsrs__next_card_impl(
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "next_card",
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_current_memory_state =
+                <Option<crate::api::fsrs::MemoryState>>::sse_decode(&mut deserializer);
+            let api_days_elapsed = <u32>::sse_decode(&mut deserializer);
+            let api_status = <crate::api::fsrs::CardStatus>::sse_decode(&mut deserializer);
+            deserializer.end();
+            transform_result_sse::<_, ()>((move || {
+                let output_ok = Result::<_, ()>::Ok(crate::api::fsrs::next_card(
+                    api_current_memory_state,
+                    api_days_elapsed,
+                    api_status,
+                ))?;
+                Ok(output_ok)
+            })())
+        },
+    )
+}
+
+// Section: static_checks
+
+#[allow(clippy::unnecessary_literal_unwrap)]
+const _: fn() = || {
+    {
+        let ItemState = None::<crate::api::fsrs::ItemState>.unwrap();
+        let _: crate::api::fsrs::MemoryState = ItemState.memory;
+        let _: u32 = ItemState.interval;
+    }
+    {
+        let MemoryState = None::<crate::api::fsrs::MemoryState>.unwrap();
+        let _: f32 = MemoryState.stability;
+        let _: f32 = MemoryState.difficulty;
+    }
+};
 
 // Section: dart2rust
 
-impl SseDecode for String {
+impl SseDecode for crate::api::fsrs::CardStatus {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut inner = <Vec<u8>>::sse_decode(deserializer);
-        return String::from_utf8(inner).unwrap();
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::api::fsrs::CardStatus::Again,
+            1 => crate::api::fsrs::CardStatus::Hard,
+            2 => crate::api::fsrs::CardStatus::Good,
+            3 => crate::api::fsrs::CardStatus::Easy,
+            _ => unreachable!("Invalid variant for CardStatus: {}", inner),
+        };
     }
 }
 
-impl SseDecode for Vec<u8> {
+impl SseDecode for f32 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut len_ = <i32>::sse_decode(deserializer);
-        let mut ans_ = vec![];
-        for idx_ in 0..len_ {
-            ans_.push(<u8>::sse_decode(deserializer));
-        }
-        return ans_;
+        deserializer.cursor.read_f32::<NativeEndian>().unwrap()
     }
-}
-
-impl SseDecode for u8 {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        deserializer.cursor.read_u8().unwrap()
-    }
-}
-
-impl SseDecode for () {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {}
 }
 
 impl SseDecode for i32 {
@@ -149,6 +161,53 @@ impl SseDecode for i32 {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         deserializer.cursor.read_i32::<NativeEndian>().unwrap()
     }
+}
+
+impl SseDecode for crate::api::fsrs::ItemState {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_memory = <crate::api::fsrs::MemoryState>::sse_decode(deserializer);
+        let mut var_interval = <u32>::sse_decode(deserializer);
+        return crate::api::fsrs::ItemState {
+            memory: var_memory,
+            interval: var_interval,
+        };
+    }
+}
+
+impl SseDecode for crate::api::fsrs::MemoryState {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_stability = <f32>::sse_decode(deserializer);
+        let mut var_difficulty = <f32>::sse_decode(deserializer);
+        return crate::api::fsrs::MemoryState {
+            stability: var_stability,
+            difficulty: var_difficulty,
+        };
+    }
+}
+
+impl SseDecode for Option<crate::api::fsrs::MemoryState> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::api::fsrs::MemoryState>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for u32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        deserializer.cursor.read_u32::<NativeEndian>().unwrap()
+    }
+}
+
+impl SseDecode for () {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {}
 }
 
 impl SseDecode for bool {
@@ -167,7 +226,7 @@ fn pde_ffi_dispatcher_primary_impl(
 ) {
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
-        2 => wire__crate__api__simple__init_app_impl(port, ptr, rust_vec_len, data_len),
+        1 => wire__crate__api__fsrs__init_app_impl(port, ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
@@ -180,40 +239,99 @@ fn pde_ffi_dispatcher_sync_impl(
 ) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
-        1 => wire__crate__api__simple__greet_impl(ptr, rust_vec_len, data_len),
+        2 => wire__crate__api__fsrs__next_card_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
 
 // Section: rust2dart
 
-impl SseEncode for String {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <Vec<u8>>::sse_encode(self.into_bytes(), serializer);
-    }
-}
-
-impl SseEncode for Vec<u8> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <i32>::sse_encode(self.len() as _, serializer);
-        for item in self {
-            <u8>::sse_encode(item, serializer);
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::fsrs::CardStatus {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::Again => 0.into_dart(),
+            Self::Hard => 1.into_dart(),
+            Self::Good => 2.into_dart(),
+            Self::Easy => 3.into_dart(),
+            _ => unreachable!(),
         }
     }
 }
-
-impl SseEncode for u8 {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        serializer.cursor.write_u8(self).unwrap();
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::api::fsrs::CardStatus {}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::fsrs::CardStatus>
+    for crate::api::fsrs::CardStatus
+{
+    fn into_into_dart(self) -> crate::api::fsrs::CardStatus {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for FrbWrapper<crate::api::fsrs::ItemState> {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.0.memory.into_into_dart().into_dart(),
+            self.0.interval.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for FrbWrapper<crate::api::fsrs::ItemState>
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<FrbWrapper<crate::api::fsrs::ItemState>>
+    for crate::api::fsrs::ItemState
+{
+    fn into_into_dart(self) -> FrbWrapper<crate::api::fsrs::ItemState> {
+        self.into()
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for FrbWrapper<crate::api::fsrs::MemoryState> {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.0.stability.into_into_dart().into_dart(),
+            self.0.difficulty.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for FrbWrapper<crate::api::fsrs::MemoryState>
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<FrbWrapper<crate::api::fsrs::MemoryState>>
+    for crate::api::fsrs::MemoryState
+{
+    fn into_into_dart(self) -> FrbWrapper<crate::api::fsrs::MemoryState> {
+        self.into()
     }
 }
 
-impl SseEncode for () {
+impl SseEncode for crate::api::fsrs::CardStatus {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {}
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::api::fsrs::CardStatus::Again => 0,
+                crate::api::fsrs::CardStatus::Hard => 1,
+                crate::api::fsrs::CardStatus::Good => 2,
+                crate::api::fsrs::CardStatus::Easy => 3,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
+impl SseEncode for f32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        serializer.cursor.write_f32::<NativeEndian>(self).unwrap();
+    }
 }
 
 impl SseEncode for i32 {
@@ -221,6 +339,44 @@ impl SseEncode for i32 {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         serializer.cursor.write_i32::<NativeEndian>(self).unwrap();
     }
+}
+
+impl SseEncode for crate::api::fsrs::ItemState {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <crate::api::fsrs::MemoryState>::sse_encode(self.memory, serializer);
+        <u32>::sse_encode(self.interval, serializer);
+    }
+}
+
+impl SseEncode for crate::api::fsrs::MemoryState {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <f32>::sse_encode(self.stability, serializer);
+        <f32>::sse_encode(self.difficulty, serializer);
+    }
+}
+
+impl SseEncode for Option<crate::api::fsrs::MemoryState> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::api::fsrs::MemoryState>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for u32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        serializer.cursor.write_u32::<NativeEndian>(self).unwrap();
+    }
+}
+
+impl SseEncode for () {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {}
 }
 
 impl SseEncode for bool {

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text('flutter_rust_bridge quickstart')),
         body: Center(
           child: Text(
-              'Action: Call Rust `greet("Tom")`\nResult: `${greet(name: "Tom")}`'),
+              'Learn card with hard status: `\nResult: `${nextCard(currentMemoryState: null, daysElapsed: 0, status: CardStatus.again).interval}`'),
         ),
       ),
     );

@@ -3,7 +3,7 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
-import 'api/simple.dart';
+import 'api/fsrs.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi' as ffi;
@@ -19,50 +19,91 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   });
 
   @protected
-  String dco_decode_String(dynamic raw);
+  MemoryState dco_decode_box_autoadd_memory_state(dynamic raw);
 
   @protected
-  Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
+  CardStatus dco_decode_card_status(dynamic raw);
 
   @protected
-  int dco_decode_u_8(dynamic raw);
+  double dco_decode_f_32(dynamic raw);
+
+  @protected
+  int dco_decode_i_32(dynamic raw);
+
+  @protected
+  ItemState dco_decode_item_state(dynamic raw);
+
+  @protected
+  MemoryState dco_decode_memory_state(dynamic raw);
+
+  @protected
+  MemoryState? dco_decode_opt_box_autoadd_memory_state(dynamic raw);
+
+  @protected
+  int dco_decode_u_32(dynamic raw);
 
   @protected
   void dco_decode_unit(dynamic raw);
 
   @protected
-  String sse_decode_String(SseDeserializer deserializer);
+  MemoryState sse_decode_box_autoadd_memory_state(SseDeserializer deserializer);
 
   @protected
-  Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
+  CardStatus sse_decode_card_status(SseDeserializer deserializer);
 
   @protected
-  int sse_decode_u_8(SseDeserializer deserializer);
-
-  @protected
-  void sse_decode_unit(SseDeserializer deserializer);
+  double sse_decode_f_32(SseDeserializer deserializer);
 
   @protected
   int sse_decode_i_32(SseDeserializer deserializer);
 
   @protected
+  ItemState sse_decode_item_state(SseDeserializer deserializer);
+
+  @protected
+  MemoryState sse_decode_memory_state(SseDeserializer deserializer);
+
+  @protected
+  MemoryState? sse_decode_opt_box_autoadd_memory_state(
+      SseDeserializer deserializer);
+
+  @protected
+  int sse_decode_u_32(SseDeserializer deserializer);
+
+  @protected
+  void sse_decode_unit(SseDeserializer deserializer);
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
-  void sse_encode_String(String self, SseSerializer serializer);
+  void sse_encode_box_autoadd_memory_state(
+      MemoryState self, SseSerializer serializer);
 
   @protected
-  void sse_encode_list_prim_u_8_strict(
-      Uint8List self, SseSerializer serializer);
+  void sse_encode_card_status(CardStatus self, SseSerializer serializer);
 
   @protected
-  void sse_encode_u_8(int self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_unit(void self, SseSerializer serializer);
+  void sse_encode_f_32(double self, SseSerializer serializer);
 
   @protected
   void sse_encode_i_32(int self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_item_state(ItemState self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_memory_state(MemoryState self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_opt_box_autoadd_memory_state(
+      MemoryState? self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_u_32(int self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_unit(void self, SseSerializer serializer);
 
   @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
