@@ -18,7 +18,7 @@ pub enum CardStatus {
 #[flutter_rust_bridge::frb(mirror(ItemState))]
 pub struct _ItemState {
     pub memory: MemoryState,
-    pub interval: u32,
+    pub interval: f32,
 }
 
 #[flutter_rust_bridge::frb(mirror(MemoryState))]

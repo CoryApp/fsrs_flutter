@@ -178,7 +178,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
     return ItemState(
       memory: dco_decode_memory_state(arr[0]),
-      interval: dco_decode_u_32(arr[1]),
+      interval: dco_decode_f_32(arr[1]),
     );
   }
 
@@ -242,7 +242,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ItemState sse_decode_item_state(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_memory = sse_decode_memory_state(deserializer);
-    var var_interval = sse_decode_u_32(deserializer);
+    var var_interval = sse_decode_f_32(deserializer);
     return ItemState(memory: var_memory, interval: var_interval);
   }
 
@@ -312,7 +312,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   void sse_encode_item_state(ItemState self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_memory_state(self.memory, serializer);
-    sse_encode_u_32(self.interval, serializer);
+    sse_encode_f_32(self.interval, serializer);
   }
 
   @protected

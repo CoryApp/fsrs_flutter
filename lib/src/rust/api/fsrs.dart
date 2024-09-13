@@ -27,7 +27,7 @@ enum CardStatus {
 
 class ItemState {
   final MemoryState memory;
-  final int interval;
+  final double interval;
 
   const ItemState({
     required this.memory,

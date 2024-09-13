@@ -8,4 +8,4 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 flutter_rust_bridge = "=2.3.0"
-fsrs = "1.2.0"
+fsrs = { git = "https://github.com/open-spaced-repetition/fsrs-rs.git", branch = "Feat/float-next-interval" }

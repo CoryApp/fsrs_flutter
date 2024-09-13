@@ -124,7 +124,7 @@ const _: fn() = || {
     {
         let ItemState = None::<crate::api::fsrs::ItemState>.unwrap();
         let _: crate::api::fsrs::MemoryState = ItemState.memory;
-        let _: u32 = ItemState.interval;
+        let _: f32 = ItemState.interval;
     }
     {
         let MemoryState = None::<crate::api::fsrs::MemoryState>.unwrap();
@@ -167,7 +167,7 @@ impl SseDecode for crate::api::fsrs::ItemState {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut var_memory = <crate::api::fsrs::MemoryState>::sse_decode(deserializer);
-        let mut var_interval = <u32>::sse_decode(deserializer);
+        let mut var_interval = <f32>::sse_decode(deserializer);
         return crate::api::fsrs::ItemState {
             memory: var_memory,
             interval: var_interval,
@@ -345,7 +345,7 @@ impl SseEncode for crate::api::fsrs::ItemState {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <crate::api::fsrs::MemoryState>::sse_encode(self.memory, serializer);
-        <u32>::sse_encode(self.interval, serializer);
+        <f32>::sse_encode(self.interval, serializer);
     }
 }
 

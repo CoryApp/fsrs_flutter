@@ -1091,9 +1091,8 @@ dependencies = [
 
 [[package]]
 name = "fsrs"
-version = "1.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a6f86707f3588ae410917427aa986e8b281fd0fad96480afd150f3e694c0d76"
+version = "1.3.0"
+source = "git+https://github.com/open-spaced-repetition/fsrs-rs.git?branch=Feat/float-next-interval#29640014dfd5e57f8db224d84f8a57d3d840fdc4"
 dependencies = [
  "burn",
  "itertools",
